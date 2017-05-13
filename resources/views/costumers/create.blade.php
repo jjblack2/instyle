@@ -6,13 +6,6 @@
 
 @section('stylesheets')
     {!! Html::style('css/parsley.css') !!}
-    {!! Html::script('https://cloud.tinymce.com/stable/tinymce.min.js') !!}
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            menubar: false
-        });
-    </script>
 @endsection
 
 @section('content')

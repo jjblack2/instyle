@@ -2,7 +2,7 @@
     <div class="col-sm-4">
         <div class="form-group">
             {{ Form::label('costumer_id', 'Nama Costumer:') }}
-            <select class="form-control" name="costumer_id">
+            <select class="form-control" name="costumer_id" @change="custSelected" v-model="costumerID">
                 @foreach ($costumers as $costumer)
                     <option value="{{ $costumer->id }}">
                         {{ $costumer->costumer_name }}
@@ -16,7 +16,7 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Alamat</label>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" v-text="costumer.costumer_address" disabled></textarea>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
 </div>
 <hr>
 
-<table class="table table-bordered table-form">
+<table class="table table-responsive table-bordered">
     <thead>
         <tr>
             <th>Kode Produk</th>
@@ -45,32 +45,32 @@
     </thead>
     <tbody>
         <tr>
-            <td class="table-name">
-                <select class="table-control" name="product_id">
+            <td>
+                <select class="dropdown" @change="productSelected" v-model="productID">
                     @foreach ($products as $product)
-                        <option value="{{ $product->id }}">
+                        <option value="{{$product->product_id}}">
                             {{ $product->product_id }}
                         </option>
                     @endforeach
                 </select>
             </td>
             <td class="table-price">
-                <input type="text" class="table-control" disabled>
+                <span class="table-text" v-text="product.product_price"></span>
             </td>
             <td class="table-weight">
-                <input type="text" class="table-control" disabled>
+                <span class="table-text" v-text="product.product_weight"></span>
             </td>
             <td class="table-qty">
-                <input type="text" class="table-control">
+                <input type="text" class="table-control" v-model="productQty">
             </td>
             <td class="table-total-weight">
-                <span class="table-text"></span>
+                <span class="table-text">@{{ product.product_weight * productQty }}</span>
             </td>
             <td class="table-additional-cost">
-                <input type="text" class="table-control">
+                <input type="text" class="table-control" v-model="tambahan">
             </td>
             <td class="table-total">
-                <span class="table-text"></span>
+                <span class="table-text">@{{ (product.product_price * productQty) + Number(tambahan) }}</span>
             </td>
             <td class="table-remove">
                 <span class="btn btn-danger">&times;</span>

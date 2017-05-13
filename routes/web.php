@@ -23,3 +23,6 @@ Route::resource('orders', 'OrderController', ['except' => ['show']]);
 
 Route::resource('categories', 'CategoryController', ['except' => ['show', 'edit', 'update', 'create']]);
 Route::resource('shippers', 'ShipperController', ['except' => ['show', 'edit', 'update', 'create']]);
+
+Route::get('ajax/getProduct/{request}', 'AjaxController@getProduct');
+Route::get('ajax/getCostumer/{request}', 'AjaxController@getCostumer');

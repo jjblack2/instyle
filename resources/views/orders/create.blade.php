@@ -5,72 +5,37 @@
 @endsection
 
 @section('stylesheets')
-    {!! Html::style('css/parsley.css') !!}
-    {!! Html::style('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')!!}
-    {!! Html::script('https://code.jquery.com/jquery-1.12.4.js') !!}
-    {!! Html::script('https://code.jquery.com/ui/1.12.1/jquery-ui.js') !!}
-    <script>
-        var $j = jQuery.noConflict();
-        $j( function() {
-            $j( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
-        });
-    </script>
+
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div id="root">
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <div class="clearfix">
+                    <span class="panel-title">Buat Pesanan</span>
+                    <a href="{{ route('orders.index') }}" class="btn btn-default pull-right">Back</a>
 
-            @include('partials.errors')
-
-            <h1>Tambah Order</h1>
-            <hr>
-            {!! Form::open(['route' => 'orders.store']) !!}
-                {{ Form::hidden('user_id', Auth::user()->id)}}
-
-                {{ Form::label('costumer_id', 'Nama Costumer:') }}
-                <select class="form-control" name="costumer_id">
-                    @foreach ($costumers as $costumer)
-                        <option value="{{ $costumer->id }}">
-                            {{ $costumer->costumer_name }}
-                            ({{ $costumer->costumer_phone }})
-                        </option>
-                    @endforeach
-                </select>
-
-                {{ Form::label('product_id', 'Kode Produk:') }}
-                <select class="form-control" name="product_id">
-                    @foreach ($products as $product)
-                        <option value="{{ $product->id }}">
-                            {{ $product->product_id }}
-                        </option>
-                    @endforeach
-                </select>
-
-                {{ Form::label('shipper_id', 'Shipper:') }}
-                <select class="form-control" name="shipper_id">
-                    @foreach ($shippers as $shipper)
-                        <option value="{{ $shipper->id }}">{{ $shipper->shipper_name }}</option>
-                    @endforeach
-                </select>
-
-                {{ Form::label('order_date', 'Tanggal Pemesanan:') }}
-                {{ Form::text('order_date', null, ['class' => 'form-control', 'id' => 'datepicker']) }}
-
-                <div class="col-sm-6">
-                    <a href="{{ route('orders.index') }}" class="btn btn-danger btn-lg btn-block" style="margin-top: 20px;">Batal</a>
                 </div>
-                <div class="col-sm-6">
-                    {{ Form::submit('Tambah Order', ['class' => 'btn btn-success btn-lg btn-block', 'style' => 'margin-top: 20px;']) }}
-                </div>
+            </div>
 
-            {!! Form::close() !!}
+            <div class="panel-body">
+                @include('orders.form')
+            </div>
 
+            <div class="panel-footer">
+                <a href="{{ route('orders.index') }}" class="btn btn-default">Cancel</a>
+                <button class="btn btn-success">Create</button>
+            </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
-    {!! Html::script('js/parsley.min.js') !!}
+    {{-- {!! Html::script('js/parsley.min.js') !!} --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script> --}}
+    <script src="https://unpkg.com/vue@2.3.3"></script>
+    <script src="https://unpkg.com/vue-resource@1.3.1/dist/vue-resource.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/dolor.js"></script>
 @endsection

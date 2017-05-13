@@ -32,6 +32,7 @@ class OrderController extends Controller
         $shippers = Shipper::all();
         $costumers = Costumer::all();
         $products = Product::all();
+        
         return view('orders.create')
             ->withShippers($shippers)
             ->withCostumers($costumers)

@@ -44,9 +44,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr v-for="(row, index) in rows">
             <td>
-                <select class="dropdown" @change="productSelected" v-model="productID">
+                <select class="dropdown" @change="productSelected(index)" v-model="row.productID">
                     @foreach ($products as $product)
                         <option value="{{$product->product_id}}">
                             {{ $product->product_id }}
@@ -54,53 +54,59 @@
                     @endforeach
                 </select>
             </td>
-            <td class="table-price">
-                <span class="table-text" v-text="product.product_price"></span>
+            <td>
+                <span class="table-text">@{{ "Rp " + (row.price = row.product.product_price)}}</span>
             </td>
-            <td class="table-weight">
-                <span class="table-text" v-text="product.product_weight"></span>
+            <td>
+                <span class="table-text">@{{ (row.weight = row.product.product_weight) + " gr"}}</span>
             </td>
-            <td class="table-qty">
-                <input type="text" class="table-control" v-model="productQty">
+            <td>
+                <input type="text" class="table-control" v-model="row.qty">
             </td>
-            <td class="table-total-weight">
-                <span class="table-text">@{{ product.product_weight * productQty }}</span>
+            <td>
+                <span class="table-text">@{{ row.totalWeight = (Number(row.product.product_weight * row.qty/1000).toFixed(2)) + " Kg" }}</span>
             </td>
-            <td class="table-additional-cost">
-                <input type="text" class="table-control" v-model="tambahan">
+            <td>
+                <input type="text" class="table-control" v-model="row.addCost">
             </td>
-            <td class="table-total">
-                <span class="table-text">@{{ (product.product_price * productQty) + Number(tambahan) }}</span>
+            <td>
+                <span class="table-text"><strong>@{{ row.totalPrice = row.price * row.qty + row.addCost }}</strong></span>
             </td>
-            <td class="table-remove">
-                <span class="btn btn-danger">&times;</span>
+            <td>
+                <span class="btn btn-danger" @click="delRow(index)">&times;</span>
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
             <td class="table-empty" colspan="5">
-                <span class="btn btn-primary">Add Line</span>
+                <span class="btn btn-primary" @click="addRow">Tambah Data</span>
             </td>
             <td class="table-label"><strong>Sub Total</strong></td>
-            <td class="table-amount"></td>
+            <td class="table-amount">
+                <span class="text-primary"><strong>@{{ "Rp " + subTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,") }}</strong></span>
+            </td>
         </tr>
         <tr>
             <td class="table-empty" colspan="5"></td>
             <td class="table-label"><strong>Diskon</strong></td>
             <td class="table-amount">
-                <input type="text" class="table-discount_empty">
+                <input type="text" class="table-discount_empty" v-model="diskon">
             </td>
         </tr>
         <tr>
             <td class="table-empty" colspan="5"></td>
             <td class="table-label"><strong>Berat Order</strong></td>
-            <td class="table-amount"></td>
+            <td class="table-amount">
+                <span class="text-danger"><strong>@{{ beratOrder.toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,") + " Kg"}}</strong></span>
+            </td>
         </tr>
         <tr>
             <td class="table-empty" colspan="5"></td>
             <td class="table-label"><strong>Grand Total</strong></td>
-            <td class="table-amount"></td>
+            <td class="table-amount">
+                <span class="text-success"><strong>@{{ "Rp " + (subTotal - diskon).toFixed(2).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,") }}</strong></span>
+            </td>
         </tr>
     </tfoot>
 </table>

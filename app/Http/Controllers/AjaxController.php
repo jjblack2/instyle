@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Product;
 use App\Costumer;
+use App\Shipper;
 
 class AjaxController extends Controller
 {
@@ -23,5 +24,11 @@ class AjaxController extends Controller
     {
         $costumer = Costumer::find($id);
         return json_encode($costumer);
+    }
+
+    public function getShipper($id)
+    {
+        $shipper = Shipper::find($id);
+        return json_encode($shipper);
     }
 }

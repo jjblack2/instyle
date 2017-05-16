@@ -32,7 +32,7 @@ class OrderController extends Controller
         $shippers = Shipper::all();
         $costumers = Costumer::all();
         $products = Product::all();
-        
+
         return view('orders.create')
             ->withShippers($shippers)
             ->withCostumers($costumers)
@@ -47,6 +47,9 @@ class OrderController extends Controller
             'user_id' => 'required|integer',
             'costumer_id' => 'required|integer',
             'order_date' => 'required|date',
+            'total_berat' => 'required|numeric',
+            'ongkir' => 'required|integer',
+            'grand_total' => 'required|integer'
         ]);
 
         // store in the database
@@ -56,9 +59,24 @@ class OrderController extends Controller
         $order->user_id = $request->user_id;
         $order->shipper_id = $request->shipper_id;
         $order->order_date = $request->order_date;
+        $order->ongkir = $request->ongkir;
+        $order->diskon = $request->diskon;
+        $order->total_berat = $request->total_berat;
+        $order->grand_total = $request->grand_total;
 
         $order->save();
 
+        $syncData = [];
+        foreach ($request->product_product_id as $id) {
+            $syncData[$id] = [
+                'quantity' => $request->quantity[$id],
+                'add_cost' => $request->add_cost[$id],
+                'total_weight' => $request->total_weight[$id],
+                'total_price' => $request->total_price[$id]
+            ];
+        }
+        $order->product()->sync($syncData);
+        
         Session::flash('success', 'Order berhasil ditambah.');
 
         // redirect to another page
@@ -97,6 +115,9 @@ class OrderController extends Controller
             'user_id' => 'required|integer',
             'costumer_id' => 'required|integer',
             'order_date' => 'required|date',
+            'total_berat' => 'required|numeric',
+            'ongkir' => 'required|integer',
+            'grand_total' => 'required|integer'
         ]);
 
         // save changes the data to database
@@ -106,6 +127,10 @@ class OrderController extends Controller
         $order->user_id = $request->user_id;
         $order->shipper_id = $request->shipper_id;
         $order->order_date = $request->order_date;
+        $order->ongkir = $request->ongkir;
+        $order->diskon = $request->diskon;
+        $order->total_berat = $request->total_berat;
+        $order->grand_total = $request->grand_total;
 
         $order->save();
 

@@ -10,12 +10,14 @@
 
 @section('content')
     <div id="root">
+        {!! Form::open(['route' => 'orders.store']) !!}
+        @include('partials.errors')
         <div class="panel panel-default" >
             <div class="panel-heading">
                 <div class="clearfix">
                     <span class="panel-title">Buat Pesanan</span>
                     <a href="{{ route('orders.index') }}" class="btn btn-default pull-right">Back</a>
-
+                    {{ Form::hidden('user_id', Auth::user()->id)}}
                 </div>
             </div>
 
@@ -25,9 +27,11 @@
 
             <div class="panel-footer">
                 <a href="{{ route('orders.index') }}" class="btn btn-default">Cancel</a>
-                <button class="btn btn-success">Create</button>
+                {{-- <button class="btn btn-success" @click="store">Create</button> --}}
+                {{ Form::submit('Buat Order', ['class' => 'btn btn-success']) }}
             </div>
         </div>
+        {!! Form::close() !!}
     </div>
 @endsection
 

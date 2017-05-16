@@ -17,7 +17,12 @@ var app = new Vue ({
             product: []
         }],
 
-        diskon: 0
+        diskon: 0,
+        ongkir: 0,
+        SubTotal: 0,
+        totalBerat: 0,
+        GrandTotal: 0
+
     },
 
     methods: {
@@ -29,6 +34,19 @@ var app = new Vue ({
         custSelected() {
             axios.get('/ajax/getCostumer/' + this.costumerID).
             then(response => this.costumer = response.data);
+        },
+
+        store() {
+            axios.post('/orders', {
+                firstName: 'Fred',
+                lastName: 'Flintstone'
+            })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
 
         addRow() {
@@ -43,8 +61,9 @@ var app = new Vue ({
                 product: []
             });
         },
+
         delRow(index) {
-            return this.rows.pop(index);
+            return this.rows.splice(index, 1);
         }
     },
 
@@ -54,7 +73,7 @@ var app = new Vue ({
             for (var i = 0; i < this.rows.length; i++) {
                 sum += parseFloat(this.rows[i].totalPrice);
             }
-            return sum;
+            return this.SubTotal = sum;
         },
 
         beratOrder() {
@@ -62,8 +81,12 @@ var app = new Vue ({
             for (var i = 0; i < this.rows.length; i++) {
                 sum += parseFloat(this.rows[i].totalWeight);
             }
-            return sum;
+            return this.totalBerat = sum;
         },
+
+        grandTotal() {
+            return this.GrandTotal = this.SubTotal + parseFloat(this.ongkir) - parseFloat(this.diskon);
+        }
 
     }
 });

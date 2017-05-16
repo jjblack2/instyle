@@ -67,16 +67,19 @@ class OrderController extends Controller
         $order->save();
 
         $syncData = [];
-        foreach ($request->product_product_id as $id) {
+        $i = 0;
+        foreach ($request->product_product_id as $id ) {
+
             $syncData[$id] = [
-                'quantity' => $request->quantity[$id],
-                'add_cost' => $request->add_cost[$id],
-                'total_weight' => $request->total_weight[$id],
-                'total_price' => $request->total_price[$id]
+                'quantity' => $request->quantity[$i],
+                'add_cost' => $request->add_cost[$i],
+                'total_weight' => $request->total_weight[$i],
+                'total_price' => $request->total_price[$i]
             ];
+            $i++;
         }
         $order->product()->sync($syncData);
-        
+
         Session::flash('success', 'Order berhasil ditambah.');
 
         // redirect to another page

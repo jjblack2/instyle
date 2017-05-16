@@ -50,9 +50,9 @@
         <tr>
             <th>Kode Produk</th>
             <th>Harga</th>
-            <th>Berat Satuan</th>
+            <th>Berat Satuan (gr)</th>
             <th>Jumlah</th>
-            <th>Berat Total</th>
+            <th>Berat Total (Kg)</th>
             <th>Biaya Tambahan</th>
             <th>Total</th>
         </tr>
@@ -79,7 +79,7 @@
                 <input type="number" class="table-control" v-model="row.qty" name="quantity[]">
             </td>
             <td>
-                <span class="table-text">@{{ row.totalWeight = (Number(row.product.product_weight * row.qty/1000).toFixed(2)) + " Kg" }}</span>
+                <span class="table-text">@{{ row.totalWeight = (Number(row.product.product_weight * row.qty/1000).toFixed(2)) }}</span>
                 <input type="hidden" name="total_weight[]" v-bind:value="row.totalWeight">
             </td>
             <td>

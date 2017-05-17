@@ -16,7 +16,7 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Alamat</label>
-            <textarea class="form-control" v-text="costumer.costumer_address" disabled></textarea>
+            <textarea class="form-control" style="height: 110px;" v-text="costumer.costumer_address" disabled></textarea>
         </div>
     </div>
 
@@ -53,6 +53,7 @@
             <th>Berat Satuan (gr)</th>
             <th>Jumlah</th>
             <th>Berat Total (Kg)</th>
+            <th>Warna</th>
             <th>Biaya Tambahan</th>
             <th>Total</th>
         </tr>
@@ -81,6 +82,9 @@
             <td>
                 <span class="table-text">@{{ row.totalWeight = (Number(row.product.product_weight * row.qty/1000).toFixed(2)) }}</span>
                 <input type="hidden" name="total_weight[]" v-bind:value="row.totalWeight">
+            </td>
+            <td>
+                <input type="text" name="warna[]" class="table-control" v-model="row.warna">
             </td>
             <td>
                 <input type="number" name="add_cost[]" class="table-control" v-model="row.addCost">

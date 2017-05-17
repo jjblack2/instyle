@@ -49,7 +49,8 @@ class OrderController extends Controller
             'order_date' => 'required|date',
             'total_berat' => 'required|numeric',
             'ongkir' => 'required|integer',
-            'grand_total' => 'required|integer'
+            'grand_total' => 'required|integer',
+            'warna' => 'required'
         ]);
 
         // store in the database
@@ -74,10 +75,12 @@ class OrderController extends Controller
                 'quantity' => $request->quantity[$i],
                 'add_cost' => $request->add_cost[$i],
                 'total_weight' => $request->total_weight[$i],
+                'warna' => strtoupper($request->warna[$i]),
                 'total_price' => $request->total_price[$i]
             ];
             $i++;
         }
+        // dd($syncData);
         $order->product()->sync($syncData);
 
         Session::flash('success', 'Order berhasil ditambah.');

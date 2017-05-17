@@ -13,6 +13,7 @@ var app = new Vue ({
             qty: 0,
             totalWeight: 0,
             addCost: 0,
+            warna: '',
             totalPrice: 0,
             product: []
         }],
@@ -57,6 +58,7 @@ var app = new Vue ({
                 qty: 0,
                 totalWeight: 0,
                 addCost: 0,
+                warna: '',
                 totalPrice: 0,
                 product: []
             });
